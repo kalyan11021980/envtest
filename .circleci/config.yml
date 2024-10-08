@@ -1,0 +1,23 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Build Angular Project
+          command: npm run build
+      - run:
+          name: Inject Environment Variables and Modify Index
+          command: node inject-env.js
+      - persist_to_workspace:
+          root: ./dist
+          paths:
+            - dist
+      - store_artifacts:
+          path: ./dist
+          destination: dist_artifacts
