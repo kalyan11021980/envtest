@@ -1,8 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
+// Load angular.json to determine the project name from "projects" section
+const angularConfig = JSON.parse(fs.readFileSync('angular.json', 'utf8'));
+const projectName = Object.keys(angularConfig.projects)[0]; // Gets the first project key (in your case "envtest")
+
 // Path to the built index.html file
-const indexPath = path.join(__dirname, 'dist', 'index.html');
+const indexPath = path.join(__dirname, 'dist', projectName, 'index.html');
 
 // Inject the script tag into index.html
 const injectEnvScript = () => {
@@ -35,8 +39,9 @@ const envVars = process.env;
 // Convert the environment variables to a JS object string
 const envFileContent = `window.env = ${JSON.stringify(envVars)};`;
 
-// Write the env.js file in the dist directory
-fs.writeFileSync('./dist/env.js', envFileContent, 'utf8');
+// Write the env.js file in the dist/projectname directory
+const envFilePath = path.join(__dirname, 'dist', projectName, 'env.js');
+fs.writeFileSync(envFilePath, envFileContent, 'utf8');
 
 // Inject env.js into index.html
 injectEnvScript();
