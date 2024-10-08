@@ -6,7 +6,7 @@ const angularConfig = JSON.parse(fs.readFileSync('angular.json', 'utf8'));
 const projectName = Object.keys(angularConfig.projects)[0]; // Gets the first project key (in your case "envtest")
 
 // Path to the built index.html file
-const indexPath = path.join(__dirname, 'dist', projectName, 'index.html');
+const indexPath = path.join(__dirname, 'dist', projectName, 'browser', 'index.html');
 
 // Inject the script tag into index.html
 const injectEnvScript = () => {

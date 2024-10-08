@@ -15,9 +15,9 @@ jobs:
           name: Inject Environment Variables and Modify Index
           command: node inject-env.js
       - persist_to_workspace:
-          root: ./dist
-          paths:
-            - dist
+        root: ./dist/envtest/browser
+        paths:
+          - .
       - store_artifacts:
           path: ./dist
           destination: dist_artifacts
